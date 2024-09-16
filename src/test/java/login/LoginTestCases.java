@@ -2,33 +2,56 @@ package login;
 
 import base.BaseTests;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.testng.annotations.Test;
+import pages.HomePage;
 import pages.LoginPage;
 
 import java.time.Duration;
 
+import static org.testng.Assert.assertEquals;
+
 public class LoginTestCases extends BaseTests
 {
-    @Test
-    public void loginMazadQatar()
+   @Test (priority = 0)
+      public void emptyMobileNumber()
+   {
+       LoginPage loginPage = new LoginPage(driver);
+       loginPage.clickOnLoginLink();
+       Assert.assertFalse(loginPage.checkNextButton(),"Empty Mobile Number cannot login test case is Pass");
+
+   }
+
+    @Test (priority = 1)
+    public void wrongOTP()
     {
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(60));
-        //driver.findElement(By.xpath("(//a[@class='logreg'])[1]")).click();
         LoginPage loginPage = new LoginPage(driver);
         loginPage.clickOnLoginLink();
         loginPage.insertMobile("238950");
-        //driver.findElement(By.name("phone")).sendKeys("238950");
         loginPage.clickOnNextButton();
-        //driver.findElement(By.xpath("//button[@class='button']")).click();
-        loginPage.insertOTP("229534");
-        //driver.findElement(By.xpath("(//*[@class='phone_code'])[1]")).sendKeys("229534");
+        loginPage.insertOTP("229533");
         loginPage.clickOnNext2Button();
-        //driver.findElement(By.xpath("//*[@class='button']")).click();
-        String actualTitle=driver.getTitle();
-        System.out.println(actualTitle);
-        driver.findElement(By.cssSelector(".langsection")).click();
-        String actualARTitle=driver.getTitle();
-        System.out.println(actualARTitle);
-        driver.quit();
+
     }
+
+    @Test (priority = 2)
+    public void validLogin()
+    {
+        LoginPage loginPage = new LoginPage(driver);
+        loginPage.clickOnLoginLink();
+        loginPage.insertMobile("238950");
+        loginPage.clickOnNextButton();
+        loginPage.insertOTP("229534");
+        loginPage.clickOnNext2Button();
+        HomePage homePage = new HomePage(driver);
+        String logoutexpectedname = "Logout";
+        String logoutactualname = homePage.getLogoutName();
+        assertEquals(logoutactualname,logoutexpectedname);
+
+    }
+
+
 }
