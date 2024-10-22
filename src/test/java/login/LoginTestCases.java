@@ -1,16 +1,10 @@
 package login;
 
 import base.BaseTests;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
-
-import java.time.Duration;
 
 import static org.testng.Assert.assertEquals;
 
@@ -22,7 +16,6 @@ public class LoginTestCases extends BaseTests
        LoginPage loginPage = new LoginPage(driver);
        loginPage.clickOnLoginLink();
        Assert.assertFalse(loginPage.checkNextButton(),"Empty Mobile Number cannot login test case is Pass");
-
    }
 
     @Test (priority = 1)
@@ -34,7 +27,9 @@ public class LoginTestCases extends BaseTests
         loginPage.clickOnNextButton();
         loginPage.insertOTP("229533");
         loginPage.clickOnNext2Button();
-
+        String expectedwrongOTP = "The user credentials were incorrect.";
+        String actualwrongOTP = loginPage.getWrongOTPMessage();
+        assertEquals(actualwrongOTP,expectedwrongOTP);
     }
 
     @Test (priority = 2)
@@ -50,8 +45,27 @@ public class LoginTestCases extends BaseTests
         String logoutexpectedname = "Logout";
         String logoutactualname = homePage.getLogoutName();
         assertEquals(logoutactualname,logoutexpectedname);
-
     }
 
+    @Test (priority = 3)
+    public void validLogoutConfirmation()
+    {
+        HomePage homePage = new HomePage(driver);
+        homePage.clickOnLogoutButton();
+        String actuallogoutconfirmation = homePage.getLogoutConfirmation();
+        String expectedlogoutconfirmation = "Yes";
+        assertEquals(actuallogoutconfirmation,expectedlogoutconfirmation);
+    }
 
+    @Test (priority = 4)
+    public void confirmLogout()
+    {
+        HomePage homePage = new HomePage(driver);
+        homePage.clickOnLogoutButton();
+        homePage.confirmLogout();
+        LoginPage loginPage = new LoginPage(driver);
+        String actuallogintext = loginPage.getLoginText();
+        String expectedlogintext = "Login";
+        assertEquals(actuallogintext,expectedlogintext);
+    }
 }

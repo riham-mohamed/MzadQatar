@@ -1,16 +1,12 @@
 package pages;
 
-import dev.failsafe.internal.util.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
-
-import static dev.failsafe.internal.util.Assert.*;
 
 public class LoginPage
 {
@@ -29,6 +25,8 @@ private final By loginLink =  By.xpath("(//a[@class='logreg'])[1]");
 private final By mobileField = By.name("phone");
 
 private final By nextButton = By.xpath("//button[@class='button']");
+
+private final By wrongOTPMsg = By.cssSelector(".text-red-500.text-xs.mt-1");
 
 private final By otpField = By.xpath("(//*[@class='phone_code'])[1]");
 
@@ -63,10 +61,22 @@ public void insertOTP(String OTPfield)
         driver.findElement(otpField).sendKeys(OTPfield);
     }
 
+public String getWrongOTPMessage()
+{
+    wait.until(ExpectedConditions.visibilityOfElementLocated(wrongOTPMsg));
+    return driver.findElement(wrongOTPMsg).getText();
+}
+
 public HomePage clickOnNext2Button()
     {
         driver.findElement(next2Button).click();
         return new HomePage(driver);
     }
+
+public String getLoginText()
+{
+    wait.until(ExpectedConditions.visibilityOfElementLocated(loginLink));
+    return driver.findElement(loginLink).getText();
+}
 
 }

@@ -2,11 +2,13 @@ package pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.time.Duration;
+import java.util.List;
 
 public class HomePage {
 
@@ -22,12 +24,35 @@ public class HomePage {
 
 private final By logoutButton = By.xpath("//p[@class='logreg']");
 
+private final By logoutConfirmation = By.cssSelector(".transparent_btn.logout_btn");
+
     public String getLogoutName()
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(logoutButton));
         String logoutButtonName;
         logoutButtonName = driver.findElement(logoutButton).getText();
         return logoutButtonName;
+    }
+
+    public void clickOnLogoutButton()
+    {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(logoutButton));
+        driver.findElement(logoutButton).click();
+    }
+
+    public String getLogoutConfirmation()
+    {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(logoutConfirmation));
+        List<WebElement> elements = driver.findElements(logoutConfirmation);
+        String firstelement;
+        return firstelement = elements.get(0).getText();
+    }
+
+    public void confirmLogout()
+    {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(logoutConfirmation));
+        List<WebElement> elements = driver.findElements(logoutConfirmation);
+        elements.get(0).click();
     }
 
 }
