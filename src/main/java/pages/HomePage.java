@@ -26,12 +26,21 @@ private final By logoutButton = By.xpath("//p[@class='logreg']");
 
 private final By logoutConfirmation = By.cssSelector(".transparent_btn.logout_btn");
 
+private final By languageButton = By.cssSelector("p[data-v-4f1c2f74='']");
+
     public String getLogoutName()
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(logoutButton));
         String logoutButtonName;
         logoutButtonName = driver.findElement(logoutButton).getText();
         return logoutButtonName;
+    }
+
+    public void switchLang()
+    {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(languageButton));
+        List<WebElement> elements = driver.findElements(languageButton);
+        elements.get(2).click();
     }
 
     public void clickOnLogoutButton()

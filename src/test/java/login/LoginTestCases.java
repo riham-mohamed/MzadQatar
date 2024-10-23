@@ -48,16 +48,27 @@ public class LoginTestCases extends BaseTests
     }
 
     @Test (priority = 3)
+    public void switchLang()
+    {
+        HomePage homePage = new HomePage(driver);
+        homePage.switchLang();
+        homePage.clickOnLogoutButton();
+        String actuallogoutconfirmationar = homePage.getLogoutConfirmation();
+        String expectedlogoutconfirmationar = "نعم";
+        assertEquals(actuallogoutconfirmationar,expectedlogoutconfirmationar);
+    }
+
+    @Test (priority = 4)
     public void validLogoutConfirmation()
     {
         HomePage homePage = new HomePage(driver);
         homePage.clickOnLogoutButton();
         String actuallogoutconfirmation = homePage.getLogoutConfirmation();
-        String expectedlogoutconfirmation = "Yes";
+        String expectedlogoutconfirmation = "نعم";
         assertEquals(actuallogoutconfirmation,expectedlogoutconfirmation);
     }
 
-    @Test (priority = 4)
+    @Test (priority = 5)
     public void confirmLogout()
     {
         HomePage homePage = new HomePage(driver);
@@ -65,7 +76,7 @@ public class LoginTestCases extends BaseTests
         homePage.confirmLogout();
         LoginPage loginPage = new LoginPage(driver);
         String actuallogintext = loginPage.getLoginText();
-        String expectedlogintext = "Login";
+        String expectedlogintext = "تسجيل الدخول";
         assertEquals(actuallogintext,expectedlogintext);
     }
 }
