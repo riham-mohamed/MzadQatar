@@ -29,6 +29,8 @@ public class SearchPage
 
     private final By searchAntiquesresults = By.xpath("//h4[contains(text(),'test')]");
 
+    private final By noResultsText = By.xpath("//p[contains(text(),'Search')]");
+
     public void writeSearchText(String searchtext)
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(searchTextBox));
@@ -60,5 +62,13 @@ public class SearchPage
         String searchantiqueresulttext = driver.findElement(searchAntiquesresults).getText();
         return searchantiqueresulttext;
     }
+
+    public String validateNoSearchResults()
+    {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(noResultsText));
+        String searchnoresulttext = driver.findElement(noResultsText).getText();
+        return searchnoresulttext;
+    }
+
 }
 
