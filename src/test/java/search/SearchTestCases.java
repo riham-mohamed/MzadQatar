@@ -26,4 +26,14 @@ public class SearchTestCases extends BaseTests
         String actualantiquessearchresult = searchPage.validateAntiquesSearchResults();
         Assert.assertTrue(actualantiquessearchresult.contains("test"));
     }
+
+    @Test (priority = 2)
+    public void validNoSearchResults()
+    {
+        SearchPage searchPage = new SearchPage(driver);
+        searchPage.writeSearchText("hello");
+        String actualnosearchresult = searchPage.validateNoSearchResults();
+        String expectednosearchresult = "Search results are empty";
+        Assert.assertEquals(actualnosearchresult,expectednosearchresult);
+    }
 }
