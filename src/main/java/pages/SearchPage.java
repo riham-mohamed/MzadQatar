@@ -23,13 +23,11 @@ public class SearchPage
 
     private final By selectCategory = By.xpath("//p[contains(text(),'In all categories')]");
 
-    private final By antiquesCategory = By.xpath("(//p[contains(text(),'Antiques')])[3]");
-
-    private final By selectSaleType = By.xpath("//button[contains(text(),'Sale')]");
-
     private final By searchresults = By.xpath("(//h3[contains(text(),'test')])[1]");
 
-    private final By antiquesresults = By.xpath("//h4[contains(text(),'test')]");
+    private final By selectAntiquesCategory = By.xpath("(//p[contains(text(),'Antiques')])[2]");
+
+    private final By searchAntiquesresults = By.xpath("//h4[contains(text(),'test')]");
 
     public void writeSearchText(String searchtext)
     {
@@ -43,14 +41,6 @@ public class SearchPage
         driver.findElement(selectCategory).click();
     }
 
-    public void selectAntiquesCategory()
-    {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(antiquesCategory));
-        driver.findElement(antiquesCategory).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(selectSaleType));
-        driver.findElement(selectSaleType).click();
-    }
-
     public String validateSearchResults()
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(searchresults));
@@ -58,11 +48,17 @@ public class SearchPage
         return searchreultstext;
     }
 
-    public String validateAntiquesResults()
+    public void selectAntiquesCategory()
     {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(antiquesresults));
-        String antiquesresultstext = driver.findElement(antiquesresults).getText();
-        return antiquesresultstext;
+        wait.until(ExpectedConditions.visibilityOfElementLocated(selectAntiquesCategory));
+        driver.findElement(selectAntiquesCategory).click();
+    }
+
+    public String validateAntiquesSearchResults()
+    {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(searchAntiquesresults));
+        String searchantiqueresulttext = driver.findElement(searchAntiquesresults).getText();
+        return searchantiqueresulttext;
     }
 }
 

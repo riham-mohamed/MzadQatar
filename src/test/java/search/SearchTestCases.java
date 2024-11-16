@@ -18,12 +18,12 @@ public class SearchTestCases extends BaseTests
     }
 
     @Test (priority = 1)
-    public void validAntiquesSearch()
+    public void validAntiqueSearch()
     {
         SearchPage searchPage = new SearchPage(driver);
         searchPage.writeSearchText("test");
         searchPage.selectAntiquesCategory();
-        String actualantiquesresult = searchPage.validateAntiquesResults();
-        Assert.assertTrue(actualantiquesresult.contains("test"));
+        String actualantiquessearchresult = searchPage.validateAntiquesSearchResults();
+        Assert.assertTrue(actualantiquessearchresult.contains("test"));
     }
 }
