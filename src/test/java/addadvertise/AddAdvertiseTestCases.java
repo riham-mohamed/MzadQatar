@@ -3,6 +3,7 @@ package addadvertise;
 import base.BaseTests;
 import org.testng.annotations.Test;
 import pages.AddAdvertisePage;
+import pages.AddAvertiseStep2Page;
 import pages.LoginPage;
 
 public class AddAdvertiseTestCases extends BaseTests
@@ -17,5 +18,10 @@ public class AddAdvertiseTestCases extends BaseTests
         loginPage.clickOnNextButton();
         loginPage.insertOTP("229534");
         loginPage.clickOnNext2Button();
+        AddAdvertisePage.selectAdvertiseLanguage();
+        AddAdvertisePage.selectAdvertiseCategory();
+        AddAdvertisePage.clickStep1NextButton();
+        AddAvertiseStep2Page AddAdvertiseStep2Page = new AddAvertiseStep2Page(driver);
+        AddAdvertiseStep2Page.selectAdType();
     }
 }
