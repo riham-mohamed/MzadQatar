@@ -36,7 +36,7 @@ public class AddAdvertisePage
         driver.findElement(advertiseLanguage).click();
     }
 
-    private final By advertiseCategory = By.id("category-2");
+    private final By advertiseCategory = By.id("category-0");
 
     public void selectAdvertiseCategory()
     {
@@ -46,10 +46,10 @@ public class AddAdvertisePage
 
     private final By step1NextButton = By.xpath("(//button[contains(text(), 'Next')])[2]");
 
-    public AddAvertiseStep2Page clickStep1NextButton()
+    public AddAdvertiseStep2Page clickStep1NextButton()
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(step1NextButton));
         driver.findElement(step1NextButton).click();
-        return new AddAvertiseStep2Page(driver);
+        return new AddAdvertiseStep2Page(driver);
     }
 }
