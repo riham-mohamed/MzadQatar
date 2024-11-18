@@ -1,8 +1,6 @@
 package pages;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
@@ -22,42 +20,53 @@ public class AddAdvertiseStep2Page
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     }
 
-    private final By adSubCategories = By.xpath("//select[@class='form-control select2-hidden-accessible' and @data-select2-id='1']");
+    private final By adSubCategories = By.xpath("(//span[contains(@class, 'select2-selection--single')])[1]");
 
     public void selectAdSubCategories()
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(adSubCategories));
         WebElement adsubcategories = driver.findElement(adSubCategories);
-        Select adtsubcategoriesselect = new Select (adsubcategories);
-        adtsubcategoriesselect.selectByVisibleText("Cars");
+        adsubcategories.click();
+        adsubcategories.sendKeys(Keys.ARROW_DOWN);
+        adsubcategories.sendKeys(Keys.ENTER);
+        //Select adtsubcategoriesselect = new Select (adsubcategories);
+        //adtsubcategoriesselect.selectByVisibleText("Cars");
     }
 
-    private final By adType = By.xpath("//select[@class='form-control select2-hidden-accessible' and @data-select2-id='43']");
+    private final By adType = By.xpath("(//span[contains(@class, 'select2-selection--single')])[2]");
 
     public void selectAdType()
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(adType));
         WebElement adtype = driver.findElement(adType);
-        Select adtypeselect = new Select (adtype);
-        adtypeselect.selectByVisibleText("Inquire");
+        adtype.click();
+        adtype.sendKeys(Keys.ARROW_DOWN);
+        adtype.sendKeys(Keys.ENTER);
+        //Select adtypeselect = new Select (adtype);
+        //adtypeselect.selectByVisibleText("Inquire");
     }
 
-    private final By adCity = By.xpath("//select[@class='form-control select2-hidden-accessible' and @data-select2-id='46']");
+   private final By adCity = By.xpath("(//span[contains(@class, 'select2-selection--single')])[3]");
 
     public void selectAdCity()
     {
         wait.until(ExpectedConditions.visibilityOfElementLocated(adCity));
         WebElement adcity = driver.findElement(adCity);
-        Select adcityselect = new Select(adcity);
-        adcityselect.selectByVisibleText("test area");
+        adcity.click();
+        adcity.sendKeys(Keys.ARROW_DOWN);
+        adcity.sendKeys(Keys.ARROW_DOWN);
+        adcity.sendKeys(Keys.ENTER);
     }
 
-    private final By step2NextButton = By.xpath("//button[contains(text(), 'Next')]");
+    private final By step2NextButton = By.cssSelector(".next_btn.first.disabled.custom_margin_b");
 
     public AddAdvertiseStep3Page clickStep2NextButton()
     {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(step2NextButton));
-        driver.findElement(step2NextButton).click();
+        //wait.until(ExpectedConditions.visibilityOfElementLocated(step2NextButton));
+       // driver.findElement(step2NextButton).click();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        WebElement button = driver.findElement(step2NextButton);
+        js.executeScript("arguments[0].click();",button);
         return new AddAdvertiseStep3Page(driver);
     }
 }

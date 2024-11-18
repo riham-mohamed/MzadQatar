@@ -2,10 +2,8 @@ package addadvertise;
 
 import base.BaseTests;
 import org.testng.annotations.Test;
-import pages.AddAdvertisePage;
+import pages.*;
 import pages.AddAdvertiseStep2Page;
-import pages.AddAdvertiseStep2Page;
-import pages.LoginPage;
 
 public class AddAdvertiseTestCases extends BaseTests
 {
@@ -27,5 +25,8 @@ public class AddAdvertiseTestCases extends BaseTests
         AddAdvertiseStep2Page.selectAdType();
         AddAdvertiseStep2Page.selectAdCity();
         AddAdvertiseStep2Page.clickStep2NextButton();
+        AddAdvertiseStep3Page AddAdvertiseStep3Page = new AddAdvertiseStep3Page(driver);
+        AddAdvertiseStep3Page.clickAddPhotos();
+        AddAdvertiseStep3Page.clickUploadPhoto();
     }
 }
