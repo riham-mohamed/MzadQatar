@@ -20,6 +20,8 @@ public LoginPage(WebDriver driver)
     this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 }
 
+private final By profileDDL = By.cssSelector(".all_action_dropdown");
+
 private final By loginLink =  By.xpath("(//a[@class='logreg'])[1]");
 
 private final By mobileField = By.name("phone");
@@ -34,6 +36,8 @@ private final By next2Button = By.xpath("//*[@class='button']");
 
 public void clickOnLoginLink()
     {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(profileDDL));
+        driver.findElement(profileDDL).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(loginLink));
         driver.findElement(loginLink).click();
     }
@@ -69,14 +73,16 @@ public String getWrongOTPMessage()
 
 public HomePage clickOnNext2Button()
     {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(next2Button));
         driver.findElement(next2Button).click();
         return new HomePage(driver);
     }
 
 public String getLoginText()
 {
+    wait.until(ExpectedConditions.visibilityOfElementLocated(profileDDL));
+    driver.findElement(profileDDL).click();
     wait.until(ExpectedConditions.visibilityOfElementLocated(loginLink));
     return driver.findElement(loginLink).getText();
 }
-
 }

@@ -1,6 +1,7 @@
 package pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
@@ -22,29 +23,27 @@ public class HomePage {
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     }
 
-private final By logoutButton = By.xpath("//p[@class='logreg']");
+private final By profileDDL = By.cssSelector(".all_action_dropdown");
+
+private final By logoutButton = By.cssSelector(".logreg");
 
 private final By logoutConfirmation = By.cssSelector(".transparent_btn.logout_btn");
 
-private final By languageButton = By.cssSelector("p[data-v-4f1c2f74='']");
+private final By languageButton = By.xpath("//a[contains(@class, 'langsection')]");
 
-    public String getLogoutName()
-    {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(logoutButton));
-        String logoutButtonName;
-        logoutButtonName = driver.findElement(logoutButton).getText();
-        return logoutButtonName;
-    }
+private final By homeMainHeadFieldtext = By.xpath("//p[@class='mainshopmenuinfo']");
 
     public void switchLang()
     {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(languageButton));
-        List<WebElement> elements = driver.findElements(languageButton);
-        elements.get(2).click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
+        WebElement langBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(languageButton));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", langBtn);
     }
 
     public void clickOnLogoutButton()
     {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(profileDDL));
+        driver.findElement(profileDDL).click();
         wait.until(ExpectedConditions.visibilityOfElementLocated(logoutButton));
         driver.findElement(logoutButton).click();
     }
@@ -64,4 +63,11 @@ private final By languageButton = By.cssSelector("p[data-v-4f1c2f74='']");
         elements.get(0).click();
     }
 
+    public String getMainHeadText()
+    {
+        wait.until(ExpectedConditions.visibilityOfElementLocated(homeMainHeadFieldtext));
+        WebElement element = driver.findElement(homeMainHeadFieldtext);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        return (String) js.executeScript("return arguments[0].textContent;", element);
+    }
 }

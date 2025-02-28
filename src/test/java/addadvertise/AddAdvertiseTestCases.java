@@ -25,8 +25,11 @@ public class AddAdvertiseTestCases extends BaseTests
         AddAdvertiseStep2Page.selectAdType();
         AddAdvertiseStep2Page.selectAdCity();
         AddAdvertiseStep2Page.clickStep2NextButton();
+        System.out.println("Next button is clicked");
         AddAdvertiseStep3Page AddAdvertiseStep3Page = new AddAdvertiseStep3Page(driver);
+        System.out.println("Step3Page is opened");
         AddAdvertiseStep3Page.clickAddPhotos();
+        System.out.println("Add photo button is clicked");
         AddAdvertiseStep3Page.clickUploadPhoto();
     }
 }

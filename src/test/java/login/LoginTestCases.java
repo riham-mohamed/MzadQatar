@@ -5,7 +5,6 @@ import org.testng.Assert;
 import org.testng.annotations.Test;
 import pages.HomePage;
 import pages.LoginPage;
-
 import static org.testng.Assert.assertEquals;
 
 public class LoginTestCases extends BaseTests
@@ -23,10 +22,10 @@ public class LoginTestCases extends BaseTests
     {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.clickOnLoginLink();
-        loginPage.insertMobile("238950");
+        loginPage.insertMobile("14755555");
         loginPage.clickOnNextButton();
-        loginPage.insertOTP("229533");
-        loginPage.clickOnNext2Button();
+        loginPage.insertOTP("111111");
+        HomePage homePage = loginPage.clickOnNext2Button();
         String expectedwrongOTP = "The user credentials were incorrect.";
         String actualwrongOTP = loginPage.getWrongOTPMessage();
         assertEquals(actualwrongOTP,expectedwrongOTP);
@@ -37,14 +36,13 @@ public class LoginTestCases extends BaseTests
     {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.clickOnLoginLink();
-        loginPage.insertMobile("238950");
+        loginPage.insertMobile("14755555");
         loginPage.clickOnNextButton();
-        loginPage.insertOTP("229534");
-        loginPage.clickOnNext2Button();
-        HomePage homePage = new HomePage(driver);
-        String logoutexpectedname = "Logout";
-        String logoutactualname = homePage.getLogoutName();
-        assertEquals(logoutactualname,logoutexpectedname);
+        loginPage.insertOTP("123456");
+        HomePage homePage = loginPage.clickOnNext2Button();
+        String mainHeaderText = homePage.getMainHeadText();
+        String expectedhomepagetext = "Bid now & win the auction";
+        assertEquals(mainHeaderText,expectedhomepagetext);
     }
 
     @Test (priority = 3)
@@ -52,31 +50,32 @@ public class LoginTestCases extends BaseTests
     {
         HomePage homePage = new HomePage(driver);
         homePage.switchLang();
-        homePage.clickOnLogoutButton();
-        String actuallogoutconfirmationar = homePage.getLogoutConfirmation();
-        String expectedlogoutconfirmationar = "نعم";
-        assertEquals(actuallogoutconfirmationar,expectedlogoutconfirmationar);
+        String mainHeaderText = homePage.getMainHeadText();
+        String expectedhomepagetext = "زاود بأعلى سعر و اكسب المزاد";
+        assertEquals(mainHeaderText,expectedhomepagetext);
     }
 
     @Test (priority = 4)
     public void validLogoutConfirmation()
     {
+        validLogin();
         HomePage homePage = new HomePage(driver);
         homePage.clickOnLogoutButton();
         String actuallogoutconfirmation = homePage.getLogoutConfirmation();
-        String expectedlogoutconfirmation = "نعم";
+        String expectedlogoutconfirmation = "Yes";
         assertEquals(actuallogoutconfirmation,expectedlogoutconfirmation);
     }
 
     @Test (priority = 5)
     public void confirmLogout()
     {
+        validLogin();
         HomePage homePage = new HomePage(driver);
         homePage.clickOnLogoutButton();
         homePage.confirmLogout();
         LoginPage loginPage = new LoginPage(driver);
         String actuallogintext = loginPage.getLoginText();
-        String expectedlogintext = "تسجيل الدخول";
+        String expectedlogintext = "Login";
         assertEquals(actuallogintext,expectedlogintext);
     }
 }

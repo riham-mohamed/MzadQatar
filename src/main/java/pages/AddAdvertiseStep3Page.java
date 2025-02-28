@@ -22,24 +22,33 @@ public class AddAdvertiseStep3Page
         this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
     }
 
-   private final By addPhotosBtn = By.cssSelector(".file_input_label.margin-top-0");
-   //  By.xpath("//span[@class='file_input_span']");
-
-   //private final By addPhotosBtn = By.xpath("//p[contains(text(),'Add photos')]");
+   private final By addPhotosBtn = By.xpath("//span[@class='file_input_span']");
+   //  By.cssSelector(".file_input_label.margin-top-0");
 
    public void clickAddPhotos()
    {
-       wait.until(ExpectedConditions.presenceOfElementLocated(addPhotosBtn));
+       wait.until(ExpectedConditions.visibilityOfElementLocated(addPhotosBtn));
        driver.findElement(addPhotosBtn).click();
    }
 
-   private final By uploadPhotoBtn = By.xpath("//h5[contains(text(), 'Upload From Device')]");
+   private final By uploadPhotoBtn = By.xpath("//input[@class='file_input']");
+
+   private final By closeBtn = By.xpath("(//button[@class='close'])[1]");
 
    public void clickUploadPhoto()
    {
        wait.until(ExpectedConditions.visibilityOfElementLocated(uploadPhotoBtn));
        WebElement photo = driver.findElement(uploadPhotoBtn);
-       String filepath = "C:\\Users\\User\\Desktop";
+       String filepath = "C:\\Users\\User\\Desktop\\Capture.PNG";
        photo.sendKeys(filepath);
+       driver.findElement(closeBtn).click();
+
+       WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+       WebElement newSection = wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@data-draggable='true']")));
+       if (newSection.isDisplayed()) {
+           System.out.println("File uploaded successfully!");
+       } else {
+           System.out.println("File upload failed.");
+       }
    }
 }
