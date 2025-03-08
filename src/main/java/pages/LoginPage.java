@@ -5,16 +5,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.MethodHandles;
 
 import java.time.Duration;
 
-public class LoginPage
+public class LoginPage extends MethodHandles
 {
 protected WebDriver driver;
 protected WebDriverWait wait;
 
 public LoginPage(WebDriver driver)
 {
+    super(driver);
     this.driver=driver;
     PageFactory.initElements(driver,this);
     this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
@@ -36,21 +38,22 @@ private final By next2Button = By.xpath("//*[@class='button']");
 
 public void clickOnLoginLink()
     {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(profileDDL));
-        driver.findElement(profileDDL).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(loginLink));
-        driver.findElement(loginLink).click();
+       explicitWait(profileDDL,60);
+       findElementWithRetry(profileDDL);
+       click(profileDDL);
+       explicitWait(loginLink,10);
+       click(loginLink);
     }
 
 public void insertMobile(String mobilefield)
     {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(mobileField));
-        driver.findElement(mobileField).sendKeys(mobilefield);
+       explicitWait(mobileField,10);
+       sendKeys(mobileField,mobilefield);
     }
 
 public void clickOnNextButton()
     {
-        driver.findElement(nextButton).click();
+       click(nextButton);
     }
 
 public boolean checkNextButton()
@@ -61,28 +64,28 @@ public boolean checkNextButton()
 
 public void insertOTP(String OTPfield)
     {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(otpField));
-        driver.findElement(otpField).sendKeys(OTPfield);
+        explicitWait(otpField,10);
+        sendKeys(otpField,OTPfield);
     }
 
 public String getWrongOTPMessage()
 {
-    wait.until(ExpectedConditions.visibilityOfElementLocated(wrongOTPMsg));
-    return driver.findElement(wrongOTPMsg).getText();
+    explicitWait(wrongOTPMsg,10);
+    return getText(wrongOTPMsg);
 }
 
 public HomePage clickOnNext2Button()
     {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(next2Button));
-        driver.findElement(next2Button).click();
-        return new HomePage(driver);
+       explicitWait(nextButton,10);
+       click(next2Button);
+       return new HomePage(driver);
     }
 
 public String getLoginText()
 {
-    wait.until(ExpectedConditions.visibilityOfElementLocated(profileDDL));
-    driver.findElement(profileDDL).click();
-    wait.until(ExpectedConditions.visibilityOfElementLocated(loginLink));
-    return driver.findElement(loginLink).getText();
+    explicitWait(profileDDL,10);
+    click(profileDDL);
+    explicitWait(loginLink,10);
+    return getText(loginLink);
 }
 }

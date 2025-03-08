@@ -7,20 +7,20 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import utils.MethodHandles;
 
 import java.time.Duration;
 import java.util.List;
 
-public class HomePage {
+public class HomePage extends MethodHandles {
 
     protected WebDriver driver;
     protected WebDriverWait wait;
 
     public HomePage(WebDriver driver)
     {
-        this.driver=driver;
-        PageFactory.initElements(driver,this);
-        this.wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+       super(driver);
+       this.driver=driver;
     }
 
 private final By profileDDL = By.cssSelector(".all_action_dropdown");
@@ -35,22 +35,22 @@ private final By homeMainHeadFieldtext = By.xpath("//p[@class='mainshopmenuinfo'
 
     public void switchLang()
     {
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(20));
-        WebElement langBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(languageButton));
-        ((JavascriptExecutor) driver).executeScript("arguments[0].click();", langBtn);
-    }
+     WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+     WebElement langBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(languageButton));
+     ((JavascriptExecutor) driver).executeScript("arguments[0].click();", langBtn);
+     }
 
     public void clickOnLogoutButton()
     {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(profileDDL));
-        driver.findElement(profileDDL).click();
-        wait.until(ExpectedConditions.visibilityOfElementLocated(logoutButton));
-        driver.findElement(logoutButton).click();
+        explicitWait(profileDDL,10);
+        click(profileDDL);
+        explicitWait(logoutButton,10);
+        click(logoutButton);
     }
 
     public String getLogoutConfirmation()
     {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(logoutConfirmation));
+        explicitWait(logoutConfirmation,10);
         List<WebElement> elements = driver.findElements(logoutConfirmation);
         String firstelement;
         return firstelement = elements.get(0).getText();
@@ -58,15 +58,15 @@ private final By homeMainHeadFieldtext = By.xpath("//p[@class='mainshopmenuinfo'
 
     public void confirmLogout()
     {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(logoutConfirmation));
+        explicitWait(logoutConfirmation,10);
         List<WebElement> elements = driver.findElements(logoutConfirmation);
         elements.get(0).click();
     }
 
     public String getMainHeadText()
     {
-        wait.until(ExpectedConditions.visibilityOfElementLocated(homeMainHeadFieldtext));
-        WebElement element = driver.findElement(homeMainHeadFieldtext);
+        explicitWait(homeMainHeadFieldtext,30);
+        WebElement element = webElement(homeMainHeadFieldtext);
         JavascriptExecutor js = (JavascriptExecutor) driver;
         return (String) js.executeScript("return arguments[0].textContent;", element);
     }

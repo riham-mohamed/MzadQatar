@@ -13,15 +13,15 @@ import java.time.Duration;
 
 public class BaseTests
 {
-    protected WebDriver driver;
+    protected static WebDriver driver;
     protected WebDriverWait wait;
-
 
     @BeforeClass
     public void setUp()
     {
         driver = new ChromeDriver();
         driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         wait = new WebDriverWait(driver, Duration.ofSeconds(60));
         driver.get("https://newwebsite.mzadqatar.com/en");
     }
